@@ -1,36 +1,34 @@
-import { type Application, BaseEE, GetLogger } from "@core/index";
-import { generateUserController, ExpressApplication } from "@modules/index";
-import { WinstonLogger } from "@common/index";
-import { Config } from "@config/index";
+import "dotenv/config";
+import express, { urlencoded } from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import helmet from "helmet";
+import compression from "compression";
 
 export default async function main() {
-  try {
-    GetLogger.getInstance().logger = new WinstonLogger()
-    const logger = GetLogger.getInstance().logger
-    // Add Workers (Examples)
-    // const consoleTask = new ConsoleTask()
-    // consoleTask.setData("Okay")
-    // TaskScheduler.getInstance().addWorker(consoleTask)
-    const app: Application = new ExpressApplication({
-      logger,
-      config: Config.getInstance(),
-      corsOptions: {
-        origin: "*"
-      },
-      limitJsonExpress: "100mb"
-    })
+    const PORT = process.env.PORT || 3000;
+    const app = express();
+    app.set("trust proxy", true);
+    app.use(helmet());
+    app.use(compression());          // Gzip/Brotli en respuestas
+    app.use(cors({
+        origin: process.env.ORIGINS || "*",
+        credentials: true,// 👈 Necesario si envías cookies cross-origin
+        methods: ["GET", "POST", "PUT", "DELETE", "PATCH"]
+    }));
+    app.use(cookieParser(process.env.COOKIE_SECRET || "Secret para signed cookies -- cámbialo por algo seguro"));
+    app.use(
+        urlencoded({
+            extended: true,
+        })
+    );
+    app.use(express.json({ limit: "100mb" }));
 
-    await app.import(generateUserController());
+    app.get("/", (req, res) => {
+        res.send("Hello, World!");
+    });
 
-    // Start server
-    await app.start();
-  } catch (e) {
-    if(e instanceof BaseEE) {
-      console.log("Error Controller, Review pipeline")
-      console.error(e);
-    } else {
-      console.error("Not Controller Error");
-      console.error(e);
-    }
-  }
+    app.listen(PORT, () => {
+        console.log("Server is running on port 3000");
+    });
 }

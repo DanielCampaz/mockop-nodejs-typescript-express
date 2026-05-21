@@ -1,25 +1,17 @@
 import main from "./main.ts";
-import {GetLogger} from "@core/index";
 
-async function root(): Promise<void> {
-  await main();
+async function root() {
+    (BigInt.prototype as any).toJSON = function () {
+        return this.toString();
+    };
+    await main();
 }
 
-
-root().then(() => {
-  try {
-    const logger = GetLogger.getInstance().logger
-    logger.log("Application Run Successful")
-  } catch (e) {
-    console.log("Application Run Successful")
-  }
-}).catch((error) => {
-  try {
-    const logger = GetLogger.getInstance().logger
-    logger.error("Application Run Failed")
-    logger.error(error);
-  } catch (e) {
-    console.error("Application Run Failed")
-    console.error(error);
-  }
-});
+root()
+    .then(() => {
+        console.log("Application started successfully.");
+    })
+    .catch((error) => {
+        console.error("Error starting application:", error);
+        process.exit(1);
+    });

@@ -1,45 +1,69 @@
 {
   "compilerOptions": {
-    "rootDir": "./src",
-    "outDir": "./dist",
-    "baseUrl": ".",
-    "paths": {
-      "@common/*": ["src/common/*"],
-      "@config/*": ["src/config/*"],
-      "@middlewares/*": ["src/middlewares/*"],
-      "@core/*": ["src/core/*"],
-      "@modules/*": ["src/modules/*"]
-    },
-
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "target": "ESNext",
-    "lib": ["ESNext"],
-    "types": ["node", "jest"],
-    "typeRoots": ["./node_modules/@types"],
-
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
-    "rewriteRelativeImportExtensions": true,
-
+    // — Módulos
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": [
+      "ES2022"
+    ],
+    "types": [
+      "node",
+      "vitest/globals"
+    ],
+    // — Decoradores
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    // — Strict
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitOverride": true,
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
-    "noImplicitAny": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "noPropertyAccessFromIndexSignature": true,
-
-    "strict": true,
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
+    "strictPropertyInitialization": true,
+    "useDefineForClassFields": true,
+    "allowImportingTsExtensions": true,
+    "emitDeclarationOnly": true,
+    // — Output
+    "outDir": "./dist",
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    // — Interop
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    // — Paths
+    "baseUrl": ".",
+    "paths": {
+      "@config/*": [
+        "./src/config/*"
+      ],
+      "@core/*": [
+        "./src/core/*"
+      ],
+      "@modules/*": [
+        "./src/modules/*"
+      ],
+      "@shared/*": [
+        "./src/shared/*"
+      ]
+    },
+    "ignoreDeprecations": "6.0"
   },
-  "include": ["./src/**/*.ts"],
-  "exclude": ["node_modules", "./src/**/*.test.ts"]
+  "include": [
+    "src/**/*",
+    "tests/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

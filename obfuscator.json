@@ -1,0 +1,9 @@
+{
+  "compact": true,
+  "controlFlowFlattening": true,
+  "controlFlowFlatteningThreshold": 0.5,
+  "identifierNamesGenerator": "hexadecimal",
+  "selfDefending": true,
+  "stringArray": true,
+  "stringArrayThreshold": 0.75
+}
