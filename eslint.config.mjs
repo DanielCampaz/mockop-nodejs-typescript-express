@@ -1,8 +1,8 @@
-const js = require('@eslint/js');
-const tseslint = require('typescript-eslint');
-const prettier = require('eslint-config-prettier');
+import js from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import prettier from 'eslint-config-prettier';
 
-module.exports = tseslint.config(
+export default tseslint.config(
     js.configs.recommended,
     ...tseslint.configs.recommended,
     prettier,
@@ -14,7 +14,7 @@ module.exports = tseslint.config(
             },
         },
         rules: {
-            'no-console': 'warn',
+            'no-console': 'off',
             'no-unused-vars': 'off',
             '@typescript-eslint/no-unused-vars': [
                 'error',
@@ -24,5 +24,13 @@ module.exports = tseslint.config(
             ],
             '@typescript-eslint/explicit-function-return-type': 'off',
         },
+        ignores: [
+            'node_modules/**',
+            'dist/**',
+            'coverage/**',
+            'build/**',
+            'vitest.config.ts',
+            'tsup.config.ts'
+        ]
     }
 );
