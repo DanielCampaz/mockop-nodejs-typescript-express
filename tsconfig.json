@@ -60,7 +60,9 @@
   },
   "include": [
     "src/**/*",
-    "tests/**/*"
+    "tests/**/*",
+    "vitest.config.ts",
+    "tsup.config.ts"
   ],
   "exclude": [
     "node_modules",
