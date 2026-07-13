@@ -4,8 +4,27 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import compression from "compression";
+import { z } from "zod";
 
+const UserZchema = z.object({
+    name: z.string(),
+    email: z.email(),
+    age: z.number().gt(0).optional()
+})
+
+// type User = z.infer<typeof UserZchema>
 export default async function main() {
+    const user = {
+        name: "Daniel Campaz",
+        email: "email@email.com"
+    }
+
+    const userPasrse = UserZchema.safeParse(user)
+    if (userPasrse.success) {
+        console.log(userPasrse.data)
+    } else {
+        console.log(userPasrse.error)
+    }
     const PORT = process.env.PORT || 3000;
     const app = express();
     app.set("trust proxy", true);
